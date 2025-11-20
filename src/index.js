@@ -56,6 +56,32 @@ app.post('/quiz', async (req, res) => {
     return res.status(500).json({ error: 'Internal server error' });
   }
 });
+// --- /demo endpoint (alias for the main quiz solver) ---
+app.post('/demo', async (req, res) => {
+  try {
+    const body = req.body || {};
+    const { email, secret, url } = body;
+
+    if (!email || !secret || !url) {
+      return res.status(400).json({
+        error: 'Invalid fields. "email", "secret", and "url" are required.'
+      });
+    }
+
+    if (secret !== APP_SECRET) {
+      return res.status(403).json({ error: 'Invalid secret' });
+    }
+
+    const deadline = Date.now() + 3 * 60 * 1000;
+    const result = await solveQuizChain({ startUrl: url, email, secret, deadline });
+
+    return res.status(200).json(result);
+  } catch (err) {
+    console.error('Unexpected error in /demo handler:', err);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 
 // --- Start server ---
 
