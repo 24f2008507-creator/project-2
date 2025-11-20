@@ -217,7 +217,7 @@ ${templateJson}
       },
       { role: 'user', content: userPrompt }
     ],
-    temperature: 0
+    temperature: 1
   });
 
   const raw = (response.choices[0].message.content || '').trim();
