@@ -1,0 +1,16 @@
+name: Email address action
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: 24f2008507@ds.study.iitm.ac.in
+        run: echo "Hello, world!"
